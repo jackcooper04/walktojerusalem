@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "walktojerusalem-b9e74": {
+      "hosting": {
+        "walktojerusalem": [
+          "walktojerusalem-b9e74"
+        ]
+      }
+    }
+  }
+}

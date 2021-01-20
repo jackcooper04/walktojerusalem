@@ -1,0 +1,23 @@
+<mat-tab-group mat-stretch-tabs [selectedIndex]="1">
+  <mat-tab label="View"> View </mat-tab>
+  <mat-tab label="Submit Walk">
+    <mat-grid-list rowHeight="1:1" [cols]="breakpoint" (window:resize)="onResize($event)">
+      <mat-grid-tile> <mat-card style="height: 25%; width:50%;" *ngIf="mobileCheck()">Hello</mat-card></mat-grid-tile>
+      <mat-grid-tile *ngIf="!mobileCheck()">
+        <mat-card  *ngIf="!mobileCheck()" style="height: 25%; width:50%;"><mat-card-title>Submit Walk:</mat-card-title>
+        <button mat-raised-button (click)="google()">{{buttonText}}</button>
+
+
+
+
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile *ngIf="!mobileCheck()"></mat-grid-tile>
+
+    </mat-grid-list>
+
+
+
+  </mat-tab>
+
+</mat-tab-group>
