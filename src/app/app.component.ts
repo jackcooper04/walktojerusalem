@@ -17,6 +17,6 @@ export class AppComponent {
   title = 'walktojerusalem';
 
   openGithub(){
-    window.open('https://github.com/jackcooper04')
+    window.open('https://github.com/jackcooper04/walktojerusalem')
   }
 }

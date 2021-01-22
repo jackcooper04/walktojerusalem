@@ -1,3 +1,25 @@
 .mat-tab-labels {
   justify-content: center;
 }
+mat-progress-bar {
+  height: 50px;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
+}
+ progress {
+   text-align: center;
+  height: 50px;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
+}
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+progress:after {
+  content: attr(value)'%';
+}

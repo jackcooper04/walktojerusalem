@@ -11,16 +11,22 @@ import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { CookieService } from 'ngx-cookie-service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateDialogComponent } from './create-dialog/create-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    MainComponent
+    MainComponent,
+    CreateDialogComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -30,7 +36,7 @@ import { environment } from 'src/environments/environment';
     AngularFireAuthModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [AngularFirestore,CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

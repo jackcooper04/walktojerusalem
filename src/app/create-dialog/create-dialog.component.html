@@ -1,0 +1,22 @@
+<mat-dialog-content>
+  <h1>Submit Walk</h1>
+  <button mat-raised-button (click)="google()" [disabled]="disableButton"
+            style="margin-bottom: 10px;">{{buttonText}}</button>
+
+          <form [formGroup]="form">
+            <mat-form-field appearance="fill">
+
+              <mat-label>Distance (km)</mat-label>
+              <input formControlName="distance" type="number" onKeyPress="if(this.value.length==3) return false;" (change)="changed($event)"
+                matInput>
+            </mat-form-field>
+            <br>
+
+          </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button  [disabled]="submitDisabled" (click)="submit()"
+  style="margin-bottom: 3px;">Submit</button>
+<button mat-raised-button color="primary" mat-dialog-close tabindex="-1" >Cancel</button>
+</mat-dialog-actions>
