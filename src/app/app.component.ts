@@ -13,10 +13,16 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon(
       "git",
       this.domSanitizer.bypassSecurityTrustResourceUrl("assets/github.svg"));
+      this.matIconRegistry.addSvgIcon(
+        "trello",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("assets/trello.svg"));
   }
   title = 'walktojerusalem';
 
   openGithub(){
     window.open('https://github.com/jackcooper04/walktojerusalem')
+  }
+  openTrello(){
+    window.open('https://trello.com/b/naqye7PE/walk-to-jerusalem')
   }
 }

@@ -7,7 +7,7 @@
             <mat-form-field appearance="fill">
 
               <mat-label>Distance (km)</mat-label>
-              <input formControlName="distance" type="number" onKeyPress="if(this.value.length==3) return false;" (change)="changed($event)"
+              <input formControlName="distance" type="number" onKeyPress="if(this.value.length==2 ) return false; return event.charCode >= 48 && event.charCode <= 57;" (input)="changed($event)" (change)="changed($event) " min="1" step="1" max="50"
                 matInput>
             </mat-form-field>
             <br>
@@ -16,7 +16,7 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button  [disabled]="submitDisabled" (click)="submit()"
+  <button mat-raised-button  [disabled]="submitDisabled" (click)="submit()" color="primary"
   style="margin-bottom: 3px;">Submit</button>
-<button mat-raised-button color="primary" mat-dialog-close tabindex="-1" >Cancel</button>
+<button mat-raised-button color="warn" mat-dialog-close tabindex="-1" >Cancel</button>
 </mat-dialog-actions>

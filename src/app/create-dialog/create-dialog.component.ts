@@ -78,6 +78,8 @@ export class CreateDialogComponent implements OnInit {
     })
   }
   changed(event){
+    console.log('triggered')
+    event.preventDefault()
     if (this.form.value.distance != undefined && this.disableButton){
       this.submitDisabled = false;
       console.log('valid')
