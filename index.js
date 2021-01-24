@@ -1,15 +1,15 @@
 const express = require("express");
 const path = require('path')
 
-
-
+const dotenv = require('dotenv');
+dotenv.config();
+const mongoose = require("mongoose");
 var development = true;
-
 
 const bodyParser = require("body-parser");
 
-const app = express();
 
+const app = express();
 
 //app.use(morgan('dev'))
 app.use(bodyParser.json());
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 });
 
 
- 
+
   app.use((req,res,next)=>{
     res.sendFile(path.join(__dirname,"dist","walktojerusalem","index.html"));
   });

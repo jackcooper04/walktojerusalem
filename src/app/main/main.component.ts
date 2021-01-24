@@ -26,7 +26,11 @@ export class MainComponent implements OnInit {
   disableButton = false;
   total;
   percent;
+  realDistance;
+  current;
+  next;
   distanceSub:Subscription;
+  checkpointSub:Subscription;
   form;
   submitDisabled = true;
   buttonText = "Sign In With Google (tcstadmin)"
@@ -47,9 +51,17 @@ export class MainComponent implements OnInit {
     this.distanceSub = this.distanceService.getDistanceListener().subscribe(responseData=>{
       this.total = responseData.total;
       this.percent = responseData.percent;
-      console.log(this.total);
-      console.log(this.percent);
+     // console.log(this.total);
+      //console.log(this.percent);
     });
+    this.checkpointSub = this.distanceService.getCheckpointListener().subscribe(responseData=>{
+      this.current = responseData.current;
+      this.next = responseData.next;
+      this.realDistance = this.next.distance - this.current.takeoff
+      console.log(this.current);
+      console.log(this.next);
+    })
+    this.distanceService.getCheckpoint();
     this.distanceService.getDistance();
     this.form = this._formBuilder.group({
       distance: ['', Validators.required],

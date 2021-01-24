@@ -8,15 +8,31 @@ const BACKEND_URL = environment.apiUrl;
 })
 export class DistanceService {
   private distanceInfo: any[];
+  private checkPointInfo:any[];
+  private current;
+  private next;
   private total;
   private percent;
   private distamceUpdated = new Subject<{total:number,percent:number}>();
+  private checkpointUpdated = new Subject<{current:any[],next:any[]}>()
   constructor(public http:HttpClient) { }
 
 
   getDistanceListener(){
     return this.distamceUpdated.asObservable();
   };
+  getCheckpointListener(){
+    return this.checkpointUpdated.asObservable();
+  }
+
+  getCheckpoint(){
+    this.http.get<{next:any[],current:any[]}>(BACKEND_URL+"other/checkpoint/4w5q7wedbh236")
+    .subscribe(responseData=>{
+      this.current = responseData.current;
+      this.next = responseData.next;
+      this.checkpointUpdated.next({current:this.current,next:this.next});
+    })
+  }
   getDistance(){
     this.http.get<{total:number,percent:number}>(BACKEND_URL+"other/gettotaldistance/4w5q7wedbh236")
     .subscribe(responseData=>{
