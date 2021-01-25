@@ -25,4 +25,7 @@ export class AppComponent {
   openTrello(){
     window.open('https://trello.com/b/naqye7PE/walk-to-jerusalem')
   }
+  openIssue(){
+    window.open('https://forms.gle/QxCrVVfjed6szuNy7')
+  }
 }
