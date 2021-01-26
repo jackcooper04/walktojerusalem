@@ -6,16 +6,31 @@
    <mat-progress-bar mode="determinate" [value]="next.percent">Test</mat-progress-bar>
   <br>
   <h1 style="text-align: center;" *ngIf="current.name != 'Start'">{{current.name}}</h1>
+  <div *ngFor="let hello of current.info">
+
   <div *ngIf="current != {}">
-    <div *ngIf="current.info.type == 'facts'">
-      <mat-card>
+    <div *ngIf="hello.type == 'facts'">
+      <mat-card style="margin-bottom: 3px;">
         <ol style="font-size: large;">
-          <li *ngFor="let item of current.info.facts">{{item}}</li>
+          <li *ngFor="let item of hello.facts" style="padding-bottom: 8px;">{{item}}</li>
         </ol>
       </mat-card>
 
     </div>
   </div>
+  <br>
+  <div *ngFor="let image of hello.images" style="display: inline-block;" >
+    <mat-card style="width: 500px; height: auto; margin-left: 5px; background: unset;">
+      <mat-card-content>
+        <img [src]="image" mat-card-image alt="image" style=" margin-left: 3%; " >
+      </mat-card-content>
+
+    </mat-card>
+
+
+  </div>
+
+</div>
   <br>
 
   <br>
