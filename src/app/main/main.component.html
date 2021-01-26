@@ -1,13 +1,11 @@
-<h1 style="text-align: center; margin-top: 10px;">We have walked {{total}}km out of 4,439km only {{4439 - total}}km to go!</h1>
+<h1 style="text-align: center; margin-top: 10px;">We have walked {{total}}km out of 4,439km. Only {{(4439 - total) | number}}km to go!</h1>
 <div>
   <mat-progress-bar mode="determinate" [value]="percent">Test</mat-progress-bar>
-  <br>
 
-  <br>
   <h1 style="text-align: center; margin-top: 3%;">Our next checkpoint is {{next.name}} in {{(next.distance - current.distance) - (total - current.distance)}} km </h1>
    <mat-progress-bar mode="determinate" [value]="next.percent">Test</mat-progress-bar>
   <br>
-  <h1 style="text-align: center;" *ngIf="current.name != 'Start'">{{current.name}}:</h1>
+  <h1 style="text-align: center;" *ngIf="current.name != 'Start'">{{current.name}}</h1>
   <div *ngIf="current != {}">
     <div *ngIf="current.info.type == 'facts'">
       <mat-card>
@@ -19,7 +17,7 @@
     </div>
   </div>
   <br>
-  <h1 style="text-align: center;">The Route: </h1>
+
   <br>
   <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d12230405.619269082!2d9.242728072603802!3d41.548920769024804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x47d88e16091dfbd1%3A0xefac2e15e8e14064!2sThe%20Christian%20School%2C%20Takeley%2C%20Takeley%2C%20Bishop&#39;s%20Stortford%20CM22%206QH%2C%20UK!3m2!1d51.868205599999996!2d0.2615419!4m5!1s0x1502d7d634c1fc4b%3A0xd96f623e456ee1cb!2sJerusalem%2C%20Israel!3m2!1d31.768318999999998!2d35.21371!5e0!3m2!1sen!2suk!4v1611312304041!5m2!1sen!2suk" width="80%" height="600" frameborder="0" style="border:0;  margin-left: 10%;
   margin-right: 10%;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
