@@ -64,9 +64,11 @@ export class CreateDialogComponent implements OnInit {
     }
   }
   submit(){
+    let nameArray = this.cookie.get('name').split(" ");
+    let modifiedString = nameArray[0] + nameArray[1][0];
     let body = {
       distance:this.form.value.distance,
-      init:this.cookie.get('init')
+      init:modifiedString
     };
     this.http.post<{message:string}>(BACKENDURL+"other/submitwalk/4w5q7wedbh236",body)
     .subscribe((responseData)=>{
