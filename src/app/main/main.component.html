@@ -20,9 +20,9 @@
   </div>
   <br>
   <div *ngFor="let image of hello.images" style="display: inline-block;" >
-    <mat-card style="width: 500px; height: auto; margin-left: 5px; background: unset;">
+    <mat-card style="max-width: 750px; max-height: 375px; margin-left: 1; background: unset; box-shadow: unset; height: auto;" *ngIf="!mobileCheck()" >
       <mat-card-content>
-        <img [src]="image" mat-card-image alt="image" style=" margin-left: 3%; " >
+        <img [src]="image" mat-card-image alt="image" style=" margin-left: 1%; max-height:375px!important;max-width:750px!important; height: auto;"  *ngIf="!mobileCheck()" >
       </mat-card-content>
 
     </mat-card>
