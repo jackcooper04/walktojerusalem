@@ -26,11 +26,67 @@ export class MainComponent implements OnInit {
   disableButton = false;
   total;
   percent;
+  at;
   realDistance;
+  checkpoints = [
+		{
+			"disabled": false,
+			"name": "Felixstowe"
+		},
+		{
+			"disabled": false,
+			"name": "The Hague"
+		},
+		{
+			"disabled": false,
+			"name": "Cologne"
+		},
+		{
+			"disabled": false,
+			"name": "Nuremberg"
+		},
+		{
+			"disabled": false,
+			"name": "Ceshe Budjanice"
+		},
+		{
+			"disabled": false,
+			"name": "Vienna"
+		},
+		{
+			"disabled": false,
+			"name": "Timisora"
+		},
+		{
+			"disabled": false,
+			"name": "Pleven"
+		},
+		{
+			"disabled": false,
+			"name": "Istanbul"
+		},
+		{
+			"disabled": false,
+			"name": "Kanya"
+		},
+		{
+			"disabled": false,
+			"name": "Tripoli"
+		},
+		{
+			"disabled": false,
+			"name": "Damascus"
+		},
+		{
+			"disabled": false,
+			"name": "Jerusalem"
+		}
+	]
   current;
   showImage = true;
   next;
   distanceSub:Subscription;
+  dataCheck;
   checkpointSub:Subscription;
   form;
   submitDisabled = true;
@@ -49,6 +105,13 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.http.get<{checkpoints:any[]}>(BACKENDURL+"other/allcheckpoints/4w5q7wedbh236")
+    .subscribe((responseData)=>{
+      console.log(responseData.checkpoints)
+    //  responseData.checkpoints = this.checkpoints;
+
+    })
     this.distanceSub = this.distanceService.getDistanceListener().subscribe(responseData=>{
       this.total = responseData.total;
       this.percent = responseData.percent;
@@ -58,9 +121,17 @@ export class MainComponent implements OnInit {
     this.checkpointSub = this.distanceService.getCheckpointListener().subscribe(responseData=>{
       this.current = responseData.current;
       this.next = responseData.next;
+      this.at = responseData.at;
+      let test = this.checkpoints.length;
+      for (let checkIdx in this.checkpoints){
+        if (checkIdx > this.at){
+          this.checkpoints[checkIdx].disabled = true;
+        }
+      }
       this.realDistance = this.next.distance - this.current.takeoff
       console.log(this.current);
       console.log(this.next);
+      this.getCheckpoint(this.checkpoints[this.at].name)
     })
     this.distanceService.getCheckpoint();
     this.distanceService.getDistance();
@@ -88,7 +159,17 @@ export class MainComponent implements OnInit {
   onResize(event) {
     //this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 6;
   }
-
+  changeCheck(event){
+    console.log('acti')
+    this.getCheckpoint(this.checkpoints[event.index].name)
+  }
+  getCheckpoint(name){
+    this.http.get<{data:any[]}>(BACKENDURL+"other/getcheckpoint/"+name+"/4w5q7wedbh236")
+    .subscribe((responseData)=>{
+      this.dataCheck = responseData.data;
+      console.log(this.dataCheck)
+    });
+  };
   mobileCheck() {
     let check = false;
 
