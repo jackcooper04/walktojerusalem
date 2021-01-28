@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   constructor(private matDialog:MatDialog) { }
   openDialog(){
     const dialogRef = this.matDialog.open(CreateDialogComponent,{
-      height:"290px",
+      height:"310px",
       width:'300px',
       data:{
         text:'Hello World',
