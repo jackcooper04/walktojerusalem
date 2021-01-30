@@ -1,3 +1,4 @@
+<div class="content">
 <h1 style="text-align: center; margin-top: 10px;">We have walked {{total}}km out of 4,439km. Only {{(4439 - total) | number }}km to go!</h1>
 <div>
   <mat-progress-bar mode="determinate" [value]="percent">Test</mat-progress-bar>
@@ -5,110 +6,123 @@
   <h1 style="text-align: center; margin-top: 3%;">Our next checkpoint is {{next.name}} in {{(next.distance - current.distance) - (total - current.distance)}} km </h1>
    <mat-progress-bar mode="determinate" [value]="next.percent">Test</mat-progress-bar>
   <br>
+
+
   <mat-tab-group [selectedIndex]="at" (selectedTabChange)="changeCheck($event)">
     <mat-tab *ngFor="let checkpoint of checkpoints" [label]="checkpoint.name" [disabled]="checkpoint.disabled">
-      <h1 style="text-align: center;" *ngIf="dataCheck.name != 'Start'">{{dataCheck.name}}</h1>
+      <div style="margin-left:25%; margin-right:25%" *ngIf="!mobileCheck() && checkpoint.name != 'Map'">
 
-
-
-      <div *ngFor="let hello of dataCheck.info">
-
-
-
-
-      <div *ngIf="dataCheck != {}">
-        <div *ngIf="hello.type == 'facts'">
-          <h1 style="text-align: center;">Facts About {{dataCheck.name}}</h1>
-          <mat-card style="margin-bottom: 3px; margin-left: 10%; margin-right: 10%;">
-            <ol style="font-size: large;">
-              <li *ngFor="let item of hello.facts" style="padding-bottom: 8px;">{{item}}</li>
-            </ol>
-            <mat-card-content>
-              <div  *ngFor="let image of hello.images" style="display: inline-block;">
-                <img [src]="image" mat-card-image alt="image" style=" margin-left: 2%; margin-right: 5px; max-height:400px!important;max-width:750px!important; height: auto;width: auto;"  *ngIf="!mobileCheck()" >
-              </div>
-
-            </mat-card-content>
-            <mat-card-footer>Information By: {{hello.owner}}</mat-card-footer>
-          </mat-card>
-          <br>
-      <!-- <div *ngFor="let image of hello.images" style="display: inline-block;" >
-        <mat-card style="max-width: 750px; max-height: 375px;margin-left: 10%; margin-right: 10%; background: unset; box-shadow: unset; height: auto;" *ngIf="!mobileCheck()" >
-          <mat-card-content>
-            <img [src]="image" mat-card-image alt="image" style=" margin-left: 1%; max-height:375px!important;max-width:750px!important; height: auto;width: auto;"  *ngIf="!mobileCheck()" >
-          </mat-card-content>
-
-        </mat-card>
-
-
-      </div> -->
-
-        </div>
-        <div *ngIf="hello.type == 'recipe'">
-          <mat-card style="margin-left: 10%; margin-right: 10%;" [id]="hello.name">
-            <mat-card-header><mat-card-title>{{hello.name}}</mat-card-title>
-              <mat-card-subtitle>Traditional {{dataCheck.name}} dish</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image [src]="hello.image" alt="I'm Broken" style=" margin-left: 1%; max-height:375px!important;max-width:750px!important; height: auto; width: auto;" *ngIf="showImage">
-
-            <mat-card-content>
-              <h1>Ingredients:</h1>
-              <div *ngFor="let group of hello.ingredients">
-                <h2>{{group.label}}</h2>
-                <div *ngFor="let ingred of group.ingredients" style="font-size: large;">
-                  {{ingred}}
-                </div>
-
-              </div>
-              <br>
-              <h1>Steps:</h1>
-              <div *ngFor="let group of hello.method">
-                <h2>{{group.label}}</h2>
-                <ol style="font-size: large;">
-                  <li *ngFor="let ingred of group.steps" style="padding-bottom: 8px;">{{ingred}}</li>
-                </ol>
-
-
-              </div>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-icon-button (click)="printDiv(hello.name)" *ngIf="!mobileCheck()"><mat-icon>print</mat-icon></button>
-
-
-            </mat-card-actions>
-            <mat-card-footer>Information By: {{hello.owner}}</mat-card-footer>
-          </mat-card>
-          <br>
-        </div>
-        <div *ngIf="hello.type == 'landmarks'">
-          <h1 style="text-align: center;">{{dataCheck.name}} Landmarks:</h1>
-          <div *ngFor="let landmark of hello.landmarks">
-            <mat-card style="margin-left: 10%; margin-right: 10%; width: auto; height: auto;">
-              <mat-card-title>{{landmark.name}}</mat-card-title>
-              <br>
-              <mat-card-content>
-                <div *ngFor="let landImage of landmark.images" style="width: 50%; height: 50%; padding: unset;">
-                  <img mat-card-image [src]="landImage" alt="I'm Broken" style=" margin-left: 1%; max-height:375px!important;max-width:750px!important; height: auto; width: auto;" *ngIf="showImage">
-
-                </div>
-                <p>{{landmark.info}}</p>
-              </mat-card-content>
-              <mat-card-footer>Information By: {{hello.owner}}</mat-card-footer>
-            </mat-card>
-            <br>
-          </div>
-        </div>
       </div>
 
+      <div style="
+      width: 98%;
 
+      padding: 10px; text-align: center; " *ngIf="checkpoint.name != 'Map' && showCat"> <button mat-stroked-button color="primary" style="margin-right: 2px;" *ngFor="let cat of categories"  (click)="scrollTo(cat.actutal)">{{cat.name}}</button></div>
+
+
+<div *ngIf="checkpoint.name != 'Map'">
+  <h1 style="text-align: center;" *ngIf="dataCheck.name != 'Start'">{{dataCheck.name}}</h1>
+  <div *ngFor="let hello of dataCheck.info" >
+
+
+
+
+    <div *ngIf="dataCheck != {}">
+      <div *ngIf="hello.type == 'facts'">
+        <h1 style="text-align: center;" id ="facts">Facts About {{dataCheck.name}}</h1>
+        <mat-card style="margin-bottom: 3px; margin-left: 10%; margin-right: 10%;" >
+          <ol style="font-size: large;">
+            <li *ngFor="let item of hello.facts" style="padding-bottom: 8px;">{{item}}</li>
+          </ol>
+          <mat-card-content>
+            <div  *ngFor="let image of hello.images" style="display: inline-block;">
+              <img [src]="image" mat-card-image alt="image" style=" margin-left: 2%; margin-right: 5px; max-height:400px!important;max-width:750px!important; height: auto;width: auto;"  *ngIf="!mobileCheck()" >
+            </div>
+
+          </mat-card-content>
+          <mat-card-footer>Information By: {{hello.owner}}</mat-card-footer>
+        </mat-card>
+        <br>
+    <!-- <div *ngFor="let image of hello.images" style="display: inline-block;" >
+      <mat-card style="max-width: 750px; max-height: 375px;margin-left: 10%; margin-right: 10%; background: unset; box-shadow: unset; height: auto;" *ngIf="!mobileCheck()" >
+        <mat-card-content>
+          <img [src]="image" mat-card-image alt="image" style=" margin-left: 1%; max-height:375px!important;max-width:750px!important; height: auto;width: auto;"  *ngIf="!mobileCheck()" >
+        </mat-card-content>
+
+      </mat-card>
+
+
+    </div> -->
+
+      </div>
+      <div *ngIf="hello.type == 'recipe'">
+        <mat-card style="margin-left: 10%; margin-right: 10%;" [id]="hello.name">
+          <mat-card-header><mat-card-title>{{hello.name}}</mat-card-title>
+            <mat-card-subtitle>Traditional {{dataCheck.name}} dish</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image [src]="hello.image" alt="I'm Broken" style=" margin-left: 1%; max-height:375px!important;max-width:750px!important; height: auto; width: auto;" *ngIf="showImage">
+
+          <mat-card-content>
+            <h1>Ingredients:</h1>
+            <div *ngFor="let group of hello.ingredients">
+              <h2>{{group.label}}</h2>
+              <div *ngFor="let ingred of group.ingredients" style="font-size: large;">
+                {{ingred}}
+              </div>
+
+            </div>
+            <br>
+            <h1>Steps:</h1>
+            <div *ngFor="let group of hello.method">
+              <h2>{{group.label}}</h2>
+              <ol style="font-size: large;">
+                <li *ngFor="let ingred of group.steps" style="padding-bottom: 8px;">{{ingred}}</li>
+              </ol>
+
+
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button (click)="printDiv(hello.name)" *ngIf="!mobileCheck()"><mat-icon>print</mat-icon></button>
+
+
+          </mat-card-actions>
+          <mat-card-footer>Information By: {{hello.owner}}</mat-card-footer>
+        </mat-card>
+        <br>
+      </div>
+      <div *ngIf="hello.type == 'landmarks'">
+        <h1 style="text-align: center;" id="landmark">{{dataCheck.name}} Landmarks</h1>
+        <div *ngFor="let landmark of hello.landmarks">
+          <mat-card style="margin-left: 10%; margin-right: 10%; width: auto; height: auto;" >
+            <mat-card-title>{{landmark.name}}</mat-card-title>
+            <br>
+            <mat-card-content>
+              <div *ngFor="let landImage of landmark.images" style="width: 50%; height: 50%; padding: unset;">
+                <img mat-card-image [src]="landImage" alt="I'm Broken" style=" margin-left: 1%; max-height:375px!important;max-width:750px!important; height: auto; width: auto;" *ngIf="showImage">
+
+              </div>
+              <p>{{landmark.info}}</p>
+            </mat-card-content>
+            <mat-card-footer>Information By: {{hello.owner}}</mat-card-footer>
+          </mat-card>
+          <br>
+        </div>
+      </div>
     </div>
+
+
+  </div>
+</div>
+
     </mat-tab>
   </mat-tab-group>
 
   <br>
 
   <br>
-  <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d12230405.619269082!2d9.242728072603802!3d41.548920769024804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x47d88e16091dfbd1%3A0xefac2e15e8e14064!2sThe%20Christian%20School%2C%20Takeley%2C%20Takeley%2C%20Bishop&#39;s%20Stortford%20CM22%206QH%2C%20UK!3m2!1d51.868205599999996!2d0.2615419!4m5!1s0x1502d7d634c1fc4b%3A0xd96f623e456ee1cb!2sJerusalem%2C%20Israel!3m2!1d31.768318999999998!2d35.21371!5e0!3m2!1sen!2suk!4v1611312304041!5m2!1sen!2suk&ll=51.931283209140915, 2.684018866000651" width="80%" height="600" frameborder="0" style="border:0;  margin-left: 10%;
+  <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d12230405.619269082!2d9.242728072603802!3d41.548920769024804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x47d88e16091dfbd1%3A0xefac2e15e8e14064!2sThe%20Christian%20School%2C%20Takeley%2C%20Takeley%2C%20Bishop&#39;s%20Stortford%20CM22%206QH%2C%20UK!3m2!1d51.868205599999996!2d0.2615419!4m5!1s0x1502d7d634c1fc4b%3A0xd96f623e456ee1cb!2sJerusalem%2C%20Israel!3m2!1d31.768318999999998!2d35.21371!5e0!3m2!1sen!2suk!4v1611312304041!5m2!1sen!2suk&ll=51.931283209140915, 2.684018866000651" width="80%" height="600" frameborder="0" style="border:0;  margin-left: 10%;
   margin-right: 10%;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 </div>
 
+</div>

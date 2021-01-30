@@ -24,3 +24,6 @@ mat-progress-bar {
 progress:after {
   content: attr(value)'%';
 }
+.position-fixed{
+  position: fixed
+}
