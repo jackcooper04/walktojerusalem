@@ -96,6 +96,26 @@
         <div *ngFor="let landmark of hello.landmarks">
           <mat-card style="margin-left: 10%; margin-right: 10%; width: auto; height: auto;" >
             <mat-card-title>{{landmark.name}}</mat-card-title>
+            <mat-card-subtitle>{{dataCheck.name}} Landmark</mat-card-subtitle>
+            <br>
+            <mat-card-content>
+              <div *ngFor="let landImage of landmark.images" style="width: 50%; height: 50%; padding: unset;">
+                <img mat-card-image [src]="landImage" alt="I'm Broken" style=" margin-left: 1%; max-height:375px!important;max-width:750px!important; height: auto; width: auto;" *ngIf="showImage">
+
+              </div>
+              <p>{{landmark.info}}</p>
+            </mat-card-content>
+            <mat-card-footer>Information By: {{hello.owner}}</mat-card-footer>
+          </mat-card>
+          <br>
+        </div>
+      </div>
+      <div *ngIf="hello.type == 'clothes'">
+        <h1 style="text-align: center;" id="clothes">{{dataCheck.name}} Traditional Clothing </h1>
+        <div *ngFor="let landmark of hello.landmarks">
+          <mat-card style="margin-left: 10%; margin-right: 10%; width: auto; height: auto;" >
+            <mat-card-title>{{landmark.name}}</mat-card-title>
+            <mat-card-subtitle>Traditional {{dataCheck.name}} Clothing</mat-card-subtitle>
             <br>
             <mat-card-content>
               <div *ngFor="let landImage of landmark.images" style="width: 50%; height: 50%; padding: unset;">

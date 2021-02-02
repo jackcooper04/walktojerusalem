@@ -167,6 +167,9 @@ export class MainComponent implements OnInit {
             obj.actutal = "landmark"
           } else if (this.dataCheck.info[checkIdx].type == "recipe"){
             obj.name = "Recipe: "+ obj.name
+          } else if (this.dataCheck.info[checkIdx].type == "clothes"){
+            obj.name = "Traditional Clothing"
+            obj.actutal = "clothes"
           }
           this.categories.push(obj)
 
