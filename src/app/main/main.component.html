@@ -9,7 +9,7 @@
 
 
   <mat-tab-group [selectedIndex]="at" (selectedTabChange)="changeCheck($event)">
-    <mat-tab *ngFor="let checkpoint of checkpoints" [label]="checkpoint.name" [disabled]="checkpoint.disabled">
+    <mat-tab *ngFor="let checkpoint of checkpoints" [label]="checkpoint.name" [disabled]="checkpoint.disabled ">
       <div style="margin-left:25%; margin-right:25%" *ngIf="!mobileCheck() && checkpoint.name != 'Map'">
 
       </div>

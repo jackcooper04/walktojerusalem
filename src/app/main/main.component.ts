@@ -33,6 +33,7 @@ export class MainComponent implements OnInit {
 
   ]
   current;
+  knomiUnlock = false;
   showCat = true;
   showImage = true;
   next;
@@ -56,6 +57,27 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    function konami(callback) {
+      let kkeys = [];
+      // up,up,down,down,left,right,left,right,B,A
+      const konami = '38,38,40,40,37,39,37,39,66,65';
+      return event => {
+          kkeys.push(event.keyCode);
+          if (kkeys.toString().indexOf(konami) >= 0) {
+              callback();
+              kkeys = [];
+          }
+      };
+  }
+  const handler = konami(() => {
+    for (let checkIdx in this.checkpoints) {
+      this.checkpoints[checkIdx].disabled = false;
+
+
+    }
+      console.log('konami 1');
+  });
+  window.addEventListener('keydown', handler);
     console.log('WARNING: DO NOT PASTE ANYTHING HERE UNLESS YOU UNDERSTAND IT COMPLETELY!');
     this.http.get<{ checkpoints: any[] }>(BACKENDURL + "other/allcheckpoints/4w5q7wedbh236")
       .subscribe((responseData) => {
@@ -201,6 +223,7 @@ export class MainComponent implements OnInit {
     }
     return check;
   };
+
   printDiv(divName) {
 
     var printContents = document.getElementById(divName).innerHTML;
