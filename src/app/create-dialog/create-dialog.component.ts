@@ -79,6 +79,7 @@ export class CreateDialogComponent implements OnInit {
 
       this.distanceService.getCheckpoint();
       this.dialogref.close(true);
+      window.location.reload();
     })
   }
   changed(event){
