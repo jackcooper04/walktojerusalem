@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateDialogComponent } from './create-dialog/create-dialog.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CreateDialogComponent } from './create-dialog/create-dialog.component';
     AppComponent,
     HeaderComponent,
     MainComponent,
-    CreateDialogComponent
+    CreateDialogComponent,
+    MaintenanceComponent
   ],
   imports: [
     BrowserModule,

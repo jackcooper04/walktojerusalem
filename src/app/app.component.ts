@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { environment } from 'src/environments/environment';
+const MAIN = environment.maintenance;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,6 +19,7 @@ export class AppComponent {
         this.domSanitizer.bypassSecurityTrustResourceUrl("assets/trello.svg"));
   }
   title = 'walktojerusalem';
+  maintenance = MAIN;
 
   openGithub(){
     window.open('https://github.com/jackcooper04/walktojerusalem')
