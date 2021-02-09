@@ -70,7 +70,7 @@ export class CreateDialogComponent implements OnInit {
       distance:this.form.value.distance,
       init:modifiedString
     };
-    this.http.post<{message:string}>(BACKENDURL+"other/submitwalk/4w5q7wedbh236",body)
+    this.http.post<{message:string}>(BACKENDURL+"wtj/submitwalk/4w5q7wedbh236",body)
     .subscribe((responseData)=>{
       console.log(responseData.message);
       this.form.reset();

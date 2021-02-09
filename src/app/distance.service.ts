@@ -27,7 +27,7 @@ export class DistanceService {
   }
 
   getCheckpoint(){
-    this.http.get<{next:any[],current:any[],at:any[]}>(BACKEND_URL+"other/checkpoint/4w5q7wedbh236")
+    this.http.get<{next:any[],current:any[],at:any[]}>(BACKEND_URL+"wtj/checkpoint/4w5q7wedbh236")
     .subscribe(responseData=>{
       this.current = responseData.current;
       this.next = responseData.next;
@@ -36,7 +36,7 @@ export class DistanceService {
     })
   }
   getDistance(){
-    this.http.get<{total:number,percent:number}>(BACKEND_URL+"other/gettotaldistance/4w5q7wedbh236")
+    this.http.get<{total:number,percent:number}>(BACKEND_URL+"wtj/gettotaldistance/4w5q7wedbh236")
     .subscribe(responseData=>{
       this.total = responseData.total;
       this.percent = responseData.percent;
