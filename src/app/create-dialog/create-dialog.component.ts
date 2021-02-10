@@ -7,7 +7,7 @@ import {
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
@@ -24,7 +24,9 @@ export class CreateDialogComponent implements OnInit {
   cancelButtonText = " Cancel";
   breakpoint;
   disableButton = false;
+  statusSub:Subscription;
   form;
+  apiOffline = false;
   submitDisabled = true;
   buttonText = "Sign In With Google (tcstadmin)"
   user$: Observable<any>;
@@ -51,6 +53,15 @@ export class CreateDialogComponent implements OnInit {
     this.dialogref.close(true);
   }
   ngOnInit(): void {
+    this.statusSub = this.distanceService.getStatusListener().subscribe(responseData => {
+      this.apiOffline = responseData.apiOffline;
+      if (this.apiOffline){
+        this.dialogref.close(true);
+      }
+      // console.log(this.total);
+      //console.log(this.percent);
+    });
+    this.distanceService.getStatus();
     this.form = this._formBuilder.group({
       distance: ['', Validators.required],
 

@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CreateDialogComponent } from '../create-dialog/create-dialog.component';
+import { DistanceService } from '../distance.service';
 const MAIN = environment.maintenance
 const APIURL  = environment.apiUrl
 @Component({
@@ -13,33 +15,39 @@ const APIURL  = environment.apiUrl
 export class HeaderComponent implements OnInit {
   maintenance = MAIN;
   apioffline = false;
-  constructor(private matDialog:MatDialog,private http:HttpClient) { }
+  statusSub:Subscription;
+  constructor(private matDialog:MatDialog,private http:HttpClient,public distanceService:DistanceService) { }
 
   openDialog(){
-    const dialogRef = this.matDialog.open(CreateDialogComponent,{
-      height:"310px",
-      width:'300px',
-      data:{
-        text:'Hello World',
-        buttonText:'No'
+    this.distanceService.getStatus();
+    let root = this;
+    setTimeout(function(){
+      if (root.maintenance || root.apioffline){
+        console.log('Down')
+      } else {
+        const dialogRef = root.matDialog.open(CreateDialogComponent,{
+          height:"310px",
+          width:'300px',
+          data:{
+            text:'Hello World',
+            buttonText:'No'
+          }
+        });
+        dialogRef.afterClosed().subscribe(result=>{
+          console.log(result)
+        })
       }
-    });
-    dialogRef.afterClosed().subscribe(result=>{
-      console.log(result)
-    })
+    }, 500);
+
+
   }
   ngOnInit(): void {
-    this.http.get<{online:boolean}>(APIURL+"wtj")
-    .subscribe(
-      (responseData)=>{
-
-     // alert(responseData.online)
-    },
-    (error)=>{
-      this.apioffline = true;
-      //alert("Error")
-    }
-    )
+    this.statusSub = this.distanceService.getStatusListener().subscribe(responseData => {
+      this.apioffline = responseData.apiOffline;
+      this.maintenance = responseData.maintenanceMode;
+      // console.log(this.total);
+      //console.log(this.percent);
+    });
   }
 
 }

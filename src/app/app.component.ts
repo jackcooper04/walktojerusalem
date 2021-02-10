@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DistanceService } from './distance.service';
 const MAIN = environment.maintenance;
 const APIURL = environment.apiUrl;
 @Component({
@@ -13,7 +15,9 @@ const APIURL = environment.apiUrl;
 
 export class AppComponent {
   apioffline = false;
-  constructor(private matIconRegistry: MatIconRegistry,private domSanitizer: DomSanitizer,private http:HttpClient){
+
+  statusSub:Subscription;
+  constructor(private matIconRegistry: MatIconRegistry,private domSanitizer: DomSanitizer,private http:HttpClient,private distanceService:DistanceService){
     this.matIconRegistry.addSvgIcon(
       "git",
       this.domSanitizer.bypassSecurityTrustResourceUrl("assets/github.svg"));
@@ -24,20 +28,17 @@ export class AppComponent {
   title = 'walktojerusalem';
   maintenance = MAIN;
   ngOnInit(): void {
+
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.http.get<{online:boolean}>(APIURL+"wtj")
-    .subscribe(
-      (responseData)=>{
-
-     // alert(responseData.online)
-    },
-    (error)=>{
-      this.apioffline = true;
-      //alert("Error")
-    }
-    )
-
+    this.statusSub = this.distanceService.getStatusListener().subscribe(responseData => {
+      console.log(responseData)
+      this.apioffline = responseData.apiOffline;
+      this.maintenance = responseData.maintenanceMode;
+      // console.log(this.total);
+      //console.log(this.percent);
+    });
+    this.distanceService.getStatus();
 
   }
 
