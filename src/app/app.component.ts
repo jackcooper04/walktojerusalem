@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 const MAIN = environment.maintenance;
+const APIURL = environment.apiUrl;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,7 +12,8 @@ const MAIN = environment.maintenance;
 })
 
 export class AppComponent {
-  constructor(private matIconRegistry: MatIconRegistry,private domSanitizer: DomSanitizer){
+  apioffline = false;
+  constructor(private matIconRegistry: MatIconRegistry,private domSanitizer: DomSanitizer,private http:HttpClient){
     this.matIconRegistry.addSvgIcon(
       "git",
       this.domSanitizer.bypassSecurityTrustResourceUrl("assets/github.svg"));
@@ -20,6 +23,23 @@ export class AppComponent {
   }
   title = 'walktojerusalem';
   maintenance = MAIN;
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.http.get<{online:boolean}>(APIURL+"wtj")
+    .subscribe(
+      (responseData)=>{
+
+     // alert(responseData.online)
+    },
+    (error)=>{
+      this.apioffline = true;
+      //alert("Error")
+    }
+    )
+
+
+  }
 
   openGithub(){
     window.open('https://github.com/jackcooper04/walktojerusalem')

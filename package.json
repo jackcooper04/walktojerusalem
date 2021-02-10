@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pkg":"git add ./ && git commit && git push"
+    "pkg":"git add ./ && git commit && git push",
+    "buildandpackage":"ng build --prod --output-path docs --base-href=/walktojerusalem/ && git add ./ && git commit && git push"
   },
   "private": true,
   "dependencies": {

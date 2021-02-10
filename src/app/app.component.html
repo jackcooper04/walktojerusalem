@@ -1,15 +1,21 @@
 <div class="parent">
   <app-header></app-header>
-  <app-main class="" *ngIf="!maintenance"></app-main>
+  <app-main class="" *ngIf="!maintenance && !apioffline"></app-main>
   <app-maintenance *ngIf="maintenance" style="margin: auto;
   width: 50%;
   border: 3px;
   padding: 10px;"></app-maintenance>
+  <app-apioffline style="margin: auto;
+  width: 50%;
+  border: 3px;
+  padding: 10px;" *ngIf="apioffline">
+
+  </app-apioffline>
 
   <div class="child">
     <hr>
     <mat-toolbar-row>
-      <span>A Jack Cooper Project: Powered By AutomateNowAPI Beta V0.2</span>
+      <span>A Jack Cooper Project: Powered By AutomateNowAPI Beta V0.3</span>
       <span class="example-spacer"></span>
       <div *ngIf="!mobileCheck()">
         <button mat-raised-button class="example-icon" aria-label="Example icon-button with share icon"  color="primary" (click)="openIssue()" *ngIf="!maintenance">

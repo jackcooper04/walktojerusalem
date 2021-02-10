@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateDialogComponent } from './create-dialog/create-dialog.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { ApiofflineComponent } from './apioffline/apioffline.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
     HeaderComponent,
     MainComponent,
     CreateDialogComponent,
-    MaintenanceComponent
+    MaintenanceComponent,
+    ApiofflineComponent
   ],
   imports: [
     BrowserModule,
