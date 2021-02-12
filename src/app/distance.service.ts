@@ -15,8 +15,10 @@ export class DistanceService {
   private maintenanceMode;
   private at;
   private total;
+  private todayDist;
   private percent;
   private distamceUpdated = new Subject<{ total: number, percent: number }>();
+  private todayDistUpdated = new Subject<{todayDist:Number}>();
   private checkpointUpdated = new Subject<{ current: any[], next: any[], at: any[] }>();
   private statusUpdated = new Subject<{ apiOffline: boolean, maintenanceMode: boolean }>();
   constructor(public http: HttpClient) { }
@@ -25,6 +27,9 @@ export class DistanceService {
   getDistanceListener() {
     return this.distamceUpdated.asObservable();
   };
+  getTodayDistanceListener(){
+    return this.todayDistUpdated.asObservable();
+  }
   getCheckpointListener() {
     return this.checkpointUpdated.asObservable();
   };
@@ -41,6 +46,13 @@ export class DistanceService {
         this.checkpointUpdated.next({ current: this.current, next: this.next, at: this.at });
       })
   }
+  getDistanceToday() {
+    this.http.get<{ total:Number }>(BACKEND_URL + "wtj/getwalkedtoday/4w5q7wedbh236")
+      .subscribe(responseData => {
+        this.todayDist = responseData.total;
+        this.todayDistUpdated.next({ todayDist:this.todayDist });
+      });
+  };
   getStatus() {
     this.http.get<{ maintenance: boolean }>(BACKEND_URL + "wtj")
       .subscribe(

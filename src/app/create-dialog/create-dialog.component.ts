@@ -87,7 +87,7 @@ export class CreateDialogComponent implements OnInit {
       this.form.reset();
       this.submitDisabled = true;
       this.distanceService.getDistance();
-
+      this.distanceService.getDistanceToday();
       this.distanceService.getCheckpoint();
       this.dialogref.close(true);
       window.location.reload();
