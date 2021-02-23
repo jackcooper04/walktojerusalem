@@ -54,6 +54,7 @@ export class HeaderComponent implements OnInit {
     this.statusSub = this.distanceService.getStatusListener().subscribe(responseData => {
       this.apioffline = responseData.apiOffline;
       this.maintenance = responseData.maintenanceMode;
+      this.distanceService.getDistanceToday();
       // console.log(this.total);
       //console.log(this.percent);
     });

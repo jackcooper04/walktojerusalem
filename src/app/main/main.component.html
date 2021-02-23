@@ -81,6 +81,7 @@
 
 
             </div>
+            <div *ngIf="hello.note != undefined">Note: {{hello.note}}</div>
           </mat-card-content>
           <mat-card-actions>
             <button mat-icon-button (click)="printDiv(hello.name)" *ngIf="!mobileCheck()"><mat-icon>print</mat-icon></button>
