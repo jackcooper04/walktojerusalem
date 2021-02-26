@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pkg":"git add ./ && git commit && git push",
-    "buildandpackage":"ng build --prod --output-path docs --base-href=/walktojerusalem/ && git add ./ && git commit && git push"
+    "pkg": "git add ./ && git commit && git push",
+    "buildandpackage": "ng build --prod --output-path docs --base-href=/walktojerusalem/ && git add ./ && git commit && git push"
   },
   "private": true,
   "dependencies": {
@@ -29,7 +29,9 @@
     "express": "^4.17.1",
     "firebase": "^7.0 || ^8.0",
     "mongoose": "^5.11.13",
+    "morgan": "^1.10.0",
     "ngx-cookie-service": "^11.0.2",
+    "pushover-notifications": "^1.2.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
