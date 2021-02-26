@@ -43,7 +43,7 @@ router.get("",(req,res,next)=>{
   } else if (maintenanceValue == "false"){
     maintenanceValue = false
   };
-  console.log(req.connection.remoteAddress)
+  //console.log(req.connection.remoteAddress)
   res.send({maintenance:maintenanceValue});
 });
 router.get("/triggermaintenance/:value",(req,res,next)=>{
