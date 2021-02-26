@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit {
 
     return check;
   };
+  //RandomChane
   ngOnInit(): void {
     this.statusSub = this.distanceService.getStatusListener().subscribe(responseData => {
       this.apioffline = responseData.apiOffline;
