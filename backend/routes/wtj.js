@@ -8,6 +8,35 @@ var maintenanceValue = false;
 const distance = require('../models/distance');
 dotenv.config();
 var pushover1 = new Pushover({token:process.env.WALKTOJERUSALEMPUSH,user:process.env.PUSHUSERKEY});
+const crypto = require('crypto')
+const sigHeaderName = 'X-Hub-Signature'
+function verifyPostData(req, res, next) {
+  const payload = JSON.stringify(req.body)
+  if (!payload) {
+    return next('Request body empty')
+  }
+
+  const sig = req.get(sigHeaderName) || ''
+  const hmac = crypto.createHmac('sha1', process.env.SECRET)
+  const digest = Buffer.from('sha1=' + hmac.update(payload).digest('hex'), 'utf8')
+  const checksum = Buffer.from(sig, 'utf8')
+  if (checksum.length !== digest.length || !crypto.timingSafeEqual(digest, checksum)) {
+    return next(`Request body digest (${digest}) did not match ${sigHeaderName} (${checksum})`)
+  }
+  return next()
+}
+router.post("/github/update",verifyPostData,(req,res,next)=>{
+  console.log('Change Detected Applying Update');
+ // console.log(req.headers);
+  const { exec } = require("child_process");
+  //TestChange
+
+  exec(
+    "git pull",
+    (err, stdout, stderr) => {}
+  );
+  res.send('OK')
+})
 router.get("",(req,res,next)=>{
   if (maintenanceValue == "true"){
     maintenanceValue = true;
