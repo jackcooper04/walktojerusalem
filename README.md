@@ -1,27 +1,122 @@
-# Walktojerusalem
+# Walk To Jerusalem
+## Logger for Group Event
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+### API Commands
+Walk to Jerusalem uses AutomateNowAPI
+**All Commands end in /APITOKEN**
 
-## Development server
+## Submit Walk
+Submit Walk
+```
+POST https://automatenow.duckdns.org/api/wtj/submitwalk
+```
+Payload
+```json
+{
+  "distance":5,
+  "init":"John D"
+}
+```
+Expected Response
+```json
+{
+	"message": "OK"
+}
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Get Total Distance
+Get total distance in raw number and percent
+```
+GET https://automatenow.duckdns.org/api/wtj/gettotaldistance
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+Example Response
 
-## Build
+```json
+{
+	"total": 1427,
+	"percent": 33
+}
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Get Data from specific checkpoint
+Get Checkpoint Data
+```
+GET https://automatenow.duckdns.org/api/wtj/getcheckpoint/:name
+```
+Example Response
+```json
+{
+	"data": {
+		"_id": "...",
+		"name": "Felixstowe",
+		"distance": 75,
+		"takeoff": 0,
+		"info": [
+			{
+				"type": "facts",
+				"owner": "Jack Cooper",
+				"images": [...],
+				"facts": [...]
+			}
+		],
+		"__v": 0
+	}
+  ```
+  
+  ## Get List of all Checkpoints
+  Get All Checkpoints
+  ```
+  GET https://automatenow.duckdns.org/api/wtj/allcheckpoints
+  ```
+  Example Response 
+  ```json 
+  {
+	"checkpoints": [
+		{
+			"disabled": false,
+			"name": "Felixstowe",
+			"cache": {
+				"filled": false
+			}
+		},
+		...
+	]
+}
+```
+#  Get Current Checkpoint and Next Checkpoint
+  ```
+  GET https://automatenow.duckdns.org/api/wtj/checkpoint
+  ```
+  Example Response 
 
-## Running unit tests
+ ```json
+ {
+	"next": {
+		"name": "Timisora",
+		"distance": 1869,
+		"percent": 11
+	},
+	"current": {
+		"_id": "...",
+		"name": "Vienna",
+		"distance": 1373,
+		"takeoff": 1190,
+		"info": [...],
+		"__v": 0
+	},
+	"at": 5
+ }
+ ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Get Distance Walked Today
+```
+GET https://automatenow.duckdns.org/api/wtj/getwalkedtoday
+```
+Example Resposne
+```json
+{
+	"total": 40
+}
+```
