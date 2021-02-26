@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DistanceService } from '../distance.service';
 const BACKENDURL = environment.apiUrl;
+const token = environment.authToken;
 @Component({
   selector: 'app-create-dialog',
   templateUrl: './create-dialog.component.html',
@@ -81,7 +82,7 @@ export class CreateDialogComponent implements OnInit {
       distance:this.form.value.distance,
       init:modifiedString
     };
-    this.http.post<{message:string}>(BACKENDURL+"wtj/submitwalk/4w5q7wedbh236",body)
+    this.http.post<{message:string}>(BACKENDURL+"walk/submitwalk/"+token,body)
     .subscribe((responseData)=>{
       console.log(responseData.message);
       this.form.reset();

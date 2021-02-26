@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 const BACKEND_URL = environment.apiUrl;
+const token = environment.authToken;
 @Injectable({
   providedIn: 'root'
 })
@@ -38,7 +39,7 @@ export class DistanceService {
   };
 
   getCheckpoint() {
-    this.http.get<{ next: any[], current: any[], at: any[] }>(BACKEND_URL + "wtj/checkpoint/4w5q7wedbh236")
+    this.http.get<{ next: any[], current: any[], at: any[] }>(BACKEND_URL + "walk/checkpoint/"+token)
       .subscribe(responseData => {
         this.current = responseData.current;
         this.next = responseData.next;
@@ -47,14 +48,14 @@ export class DistanceService {
       })
   }
   getDistanceToday() {
-    this.http.get<{ total:Number }>(BACKEND_URL + "wtj/getwalkedtoday/4w5q7wedbh236")
+    this.http.get<{ total:Number }>(BACKEND_URL + "walk/getwalkedtoday/"+token)
       .subscribe(responseData => {
         this.todayDist = responseData.total;
         this.todayDistUpdated.next({ todayDist:this.todayDist });
       });
   };
   getStatus() {
-    this.http.get<{ maintenance: boolean }>(BACKEND_URL + "wtj")
+    this.http.get<{ maintenance: boolean }>(BACKEND_URL + "walk")
       .subscribe(
         (responseData) => {
           console.log(responseData.maintenance)
@@ -95,7 +96,7 @@ export class DistanceService {
       )
   }
   getDistance() {
-    this.http.get<{ total: number, percent: number }>(BACKEND_URL + "wtj/gettotaldistance/4w5q7wedbh236")
+    this.http.get<{ total: number, percent: number }>(BACKEND_URL + "walk/gettotaldistance/"+token)
       .subscribe(responseData => {
         this.total = responseData.total;
         this.percent = responseData.percent;

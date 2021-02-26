@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateDialogComponent } from '../create-dialog/create-dialog.component';
 import { DistanceService } from '../distance.service';
 const BACKENDURL = environment.apiUrl;
-
+const token = environment.authToken;
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -79,7 +79,7 @@ export class MainComponent implements OnInit {
   });
   window.addEventListener('keydown', handler);
     console.log('WARNING: DO NOT PASTE ANYTHING HERE UNLESS YOU UNDERSTAND IT COMPLETELY!');
-    this.http.get<{ checkpoints: any[] }>(BACKENDURL + "wtj/allcheckpoints/4w5q7wedbh236")
+    this.http.get<{ checkpoints: any[] }>(BACKENDURL + "walk/allcheckpoints/"+token)
       .subscribe((responseData) => {
         //console.log(responseData.checkpoints)
          this.checkpoints = responseData.checkpoints;
@@ -168,7 +168,7 @@ export class MainComponent implements OnInit {
         }
       }
     }
-    this.http.get<{ data: any[] }>(BACKENDURL + "wtj/getcheckpoint/" + name + "/4w5q7wedbh236")
+    this.http.get<{ data: any[] }>(BACKENDURL + "walk/getcheckpoint/" + name + "/"+token)
       .subscribe((responseData) => {
         //console.log('requesting')
         this.dataCheck = responseData.data;
@@ -246,7 +246,7 @@ export class MainComponent implements OnInit {
       distance: this.form.value.distance,
       init: this.cookie.get('init')
     };
-    this.http.post<{ message: string }>(BACKENDURL + "wtj/submitwalk/4w5q7wedbh236", body)
+    this.http.post<{ message: string }>(BACKENDURL + "walk/submitwalk/"+token, body)
       .subscribe((responseData) => {
      //   console.log(responseData.message);
         this.form.reset();
