@@ -38,7 +38,7 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use("/api/walk",wtjRoute);
+app.use("/api/wtj",wtjRoute);
 app.get("/",(req,res,next)=>{
   res.sendStatus(200);
 });
