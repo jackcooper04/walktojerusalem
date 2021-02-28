@@ -104,7 +104,12 @@ export class MainComponent implements OnInit {
 
         }
         if (checkIdx == this.at){
-          this.checkpoints.splice(Number(checkIdx) + 1,0,{"name":"Map","disabled":false})
+
+          console.log(this.checkpoints[Number(checkIdx) + 1])
+          if (this.checkpoints[Number(checkIdx) + 1].name != "Map"){
+            this.checkpoints.splice(Number(checkIdx) + 1,0,{"name":"Map","disabled":false});
+          };
+
         }
 
       }

@@ -24,6 +24,9 @@ export class AppComponent {
       this.matIconRegistry.addSvgIcon(
         "trello",
         this.domSanitizer.bypassSecurityTrustResourceUrl("assets/trello.svg"));
+        this.matIconRegistry.addSvgIcon(
+          "uptime",
+          this.domSanitizer.bypassSecurityTrustResourceUrl("assets/icon-uptimerobot.svg"));
   }
   title = 'walktojerusalem';
   maintenance = MAIN;
@@ -50,6 +53,9 @@ export class AppComponent {
   }
   openIssue(){
     window.open('https://forms.gle/QxCrVVfjed6szuNy7')
+  }
+  openUptime(){
+    window.open('https://stats.uptimerobot.com/znjAEFRQz3')
   }
   mobileCheck() {
     let check = false;

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 const BACKEND_URL = environment.apiUrl;
@@ -13,16 +14,17 @@ export class DistanceService {
   private current;
   private next;
   private apiOffline;
+  private selfWalk;
   private maintenanceMode;
   private at;
   private total;
   private todayDist;
   private percent;
   private distamceUpdated = new Subject<{ total: number, percent: number }>();
-  private todayDistUpdated = new Subject<{todayDist:Number}>();
+  private todayDistUpdated = new Subject<{todayDist:Number,selfWalk:Number}>();
   private checkpointUpdated = new Subject<{ current: any[], next: any[], at: any[] }>();
   private statusUpdated = new Subject<{ apiOffline: boolean, maintenanceMode: boolean }>();
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient,private cookie:CookieService) { }
 
 
   getDistanceListener() {
@@ -48,10 +50,15 @@ export class DistanceService {
       })
   }
   getDistanceToday() {
-    this.http.get<{ total:Number }>(BACKEND_URL + "walk/getwalkedtoday/"+token)
+    let nameArray = this.cookie.get('name').split(" ");
+    let modifiedString = nameArray[0] + nameArray[1][0];
+
+
+    this.http.get<{ total:Number,self:Number }>(BACKEND_URL + "walk/getwalkedtoday/DUD/"+token)
       .subscribe(responseData => {
         this.todayDist = responseData.total;
-        this.todayDistUpdated.next({ todayDist:this.todayDist });
+        this.selfWalk = responseData.self;
+        this.todayDistUpdated.next({ todayDist:this.todayDist,selfWalk:this.selfWalk });
       });
   };
   getStatus() {

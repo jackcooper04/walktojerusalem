@@ -15,6 +15,7 @@ const APIURL  = environment.apiUrl
 export class HeaderComponent implements OnInit {
   maintenance = MAIN;
   todayDist;
+  selfDist;
   todayWalkSub:Subscription;
   apioffline = false;
   statusSub:Subscription;
@@ -61,6 +62,7 @@ export class HeaderComponent implements OnInit {
     });
     this.todayWalkSub = this.distanceService.getTodayDistanceListener().subscribe(responseData => {
      this.todayDist = responseData.todayDist;
+     this.selfDist = responseData.selfWalk;
       // console.log(this.total);
       //console.log(this.percent);
     });

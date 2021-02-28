@@ -225,7 +225,7 @@ router.post("/addcheckpoint",(req,res,next)=>{
 
 var development = false;
 var fakeNumber = 550
-router.get("/getwalkedtoday/:auth",(req,res,next)=>{
+router.get("/getwalkedtoday/:init/:auth",(req,res,next)=>{
   if (req.params['auth'] != process.env.WTJAUTH){
     res.sendStatus(403);
     return;
@@ -238,11 +238,15 @@ router.get("/getwalkedtoday/:auth",(req,res,next)=>{
       }
   })
   .then((result)=>{
-    var storedNumber = 0
+    var storedNumber = 0;
+    var selfNumber = 0;
     for (let resultIdx in result){
       storedNumber = storedNumber + result[resultIdx].distance;
+      if (result[resultIdx].initials == req.params['init']){
+        selfNumber = selfNumber + result[resultIdx].distance
+      }
     };
-    res.json({total:storedNumber});
+    res.json({total:storedNumber,self:selfNumber});
   });
 });
 

@@ -21,6 +21,9 @@
         <button mat-raised-button class="example-icon" aria-label="Example icon-button with share icon"  color="primary" (click)="openIssue()" *ngIf="!maintenance">
           Submit Issue
           </button>
+          <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="openUptime()">
+            <mat-icon  svgIcon="uptime"></mat-icon>
+          </button>
           <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="openTrello()">
             <mat-icon  svgIcon="trello"></mat-icon>
           </button>

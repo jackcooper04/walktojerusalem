@@ -13,6 +13,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DistanceService } from '../distance.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 const BACKENDURL = environment.apiUrl;
 const token = environment.authToken;
 @Component({
@@ -31,7 +32,7 @@ export class CreateDialogComponent implements OnInit {
   submitDisabled = true;
   buttonText = "Sign In With Google (tcstadmin)"
   user$: Observable<any>;
-  constructor(private afAuth: AngularFireAuth, private afs:AngularFirestore,private cookie:CookieService,public _formBuilder: FormBuilder,public http:HttpClient,public distanceService:DistanceService,
+  constructor(private afAuth: AngularFireAuth, private afs:AngularFirestore,private cookie:CookieService,public _formBuilder: FormBuilder,public http:HttpClient,public distanceService:DistanceService,private _snackBar: MatSnackBar,
     @Inject (MAT_DIALOG_DATA) public data:any,public dialogref:MatDialogRef<CreateDialogComponent>
   ) {
     if (data){
@@ -91,7 +92,10 @@ export class CreateDialogComponent implements OnInit {
       this.distanceService.getDistanceToday();
       this.distanceService.getCheckpoint();
       this.dialogref.close(true);
-      window.location.reload();
+      this._snackBar.open('Walk Submitted', 'OK', {
+        duration: 10000,
+      });
+      //window.location.reload();
     })
   }
   changed(event){
