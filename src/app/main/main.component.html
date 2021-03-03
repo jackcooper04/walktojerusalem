@@ -21,7 +21,11 @@
 
 
 <div *ngIf="checkpoint.name != 'Map'">
-  <h1 style="text-align: center;" *ngIf="dataCheck.name != 'Start'">{{dataCheck.name}}</h1>
+  <h1 style="text-align: center;" *ngIf="dataCheck.name != 'Start'">{{dataCheck.name}}  <button mat-icon-button *ngIf="admin" (click)="refresh(checkpoint)">
+    <mat-icon>cached</mat-icon>
+  </button><button mat-icon-button *ngIf="admin" (click)="clearCache(checkpoint)">
+    <mat-icon>delete</mat-icon>
+  </button></h1>
   <div *ngFor="let hello of dataCheck.info" >
 
 

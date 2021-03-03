@@ -33,13 +33,16 @@ export class MainComponent implements OnInit {
 
   ]
   current;
+  admin;
   knomiUnlock = false;
   showCat = true;
+  idxStore;
   showImage = true;
   next;
   distanceSub: Subscription;
   dataCheck;
   checkpointSub: Subscription;
+  adminCheck:Subscription;
   form;
   submitDisabled = true;
   buttonText = "Sign In With Google (tcstadmin)"
@@ -77,7 +80,7 @@ export class MainComponent implements OnInit {
     }
       console.log('konami 1');
   });
-  window.addEventListener('keydown', handler);
+  //window.addEventListener('keydown', handler);
     console.log('WARNING: DO NOT PASTE ANYTHING HERE UNLESS YOU UNDERSTAND IT COMPLETELY!');
     this.http.get<{ checkpoints: any[] }>(BACKENDURL + "walk/allcheckpoints/"+token)
       .subscribe((responseData) => {
@@ -91,29 +94,54 @@ export class MainComponent implements OnInit {
       // console.log(this.total);
       //console.log(this.percent);
     });
+    this.adminCheck = this.distanceService.getAdminListener().subscribe(responseData =>{
+      this.admin = responseData.admin;
+
+
+    });
+
     this.checkpointSub = this.distanceService.getCheckpointListener().subscribe(responseData => {
       this.current = responseData.current;
       this.next = responseData.next;
       this.at = responseData.at;
       let test = this.checkpoints.length;
+  //    console.log(this.checkpoints)
       for (let checkIdx in this.checkpoints) {
+       // console.log('at ' + checkIdx)
+        //console.log(this.checkpoints[checkIdx]);
         if (checkIdx > this.at) {
           if (this.checkpoints[checkIdx].name != 'Map'){
+           // console.log(this.checkpoints[checkIdx].name)
             this.checkpoints[checkIdx].disabled = true;
           }
 
         }
         if (checkIdx == this.at){
+          this.idxStore = checkIdx;
+        }
+        /* if (checkIdx == this.at){
 
           console.log(this.checkpoints[Number(checkIdx) + 1])
           if (this.checkpoints[Number(checkIdx) + 1].name != "Map"){
             this.checkpoints.splice(Number(checkIdx) + 1,0,{"name":"Map","disabled":false});
           };
 
+        } */
+        if (this.admin){
+
+          for (let checkIdx in this.checkpoints) {
+            this.checkpoints[checkIdx].disabled = false;
+
+
+          }
         }
 
       }
-    //  console.log(this.checkpoints)
+      if (this.checkpoints[Number(this.idxStore) + 1].name != "Map"){
+        this.checkpoints.splice(Number(this.idxStore) + 1,0,{"name":"Map","disabled":false});
+      };
+
+    //console.log(this.checkpoints)
       this.realDistance = this.next.distance - this.current.takeoff
       //console.log(this.current);
      // console.log(this.next);
@@ -148,6 +176,13 @@ export class MainComponent implements OnInit {
   changeCheck(event) {
    // console.log('acti')
     this.getCheckpoint(this.checkpoints[event.index].name)
+  }
+  clearCache(id){
+    id.cache.filled = false;
+    console.log(id);
+  };
+  refresh(id){
+    this.getCheckpoint(id.name)
   }
   getCheckpoint(name) {
     var storeNeeded = false;

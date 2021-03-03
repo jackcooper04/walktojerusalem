@@ -20,16 +20,21 @@ export class DistanceService {
   private total;
   private todayDist;
   private percent;
+  private admin = false;
   private distamceUpdated = new Subject<{ total: number, percent: number }>();
   private todayDistUpdated = new Subject<{todayDist:Number,selfWalk:Number}>();
   private checkpointUpdated = new Subject<{ current: any[], next: any[], at: any[] }>();
   private statusUpdated = new Subject<{ apiOffline: boolean, maintenanceMode: boolean }>();
+  private adminUpdated = new Subject<{admin:boolean}>();
   constructor(public http: HttpClient,private cookie:CookieService) { }
 
 
   getDistanceListener() {
     return this.distamceUpdated.asObservable();
   };
+  getAdminListener(){
+    return this.adminUpdated.asObservable();
+  }
   getTodayDistanceListener(){
     return this.todayDistUpdated.asObservable();
   }
@@ -49,6 +54,12 @@ export class DistanceService {
         this.checkpointUpdated.next({ current: this.current, next: this.next, at: this.at });
       })
   }
+  getAdmin(){
+    return this.admin;
+  }
+  setAdmin(state){
+    this.adminUpdated.next({admin:state});
+  };
   getDistanceToday() {
     let nameArray = this.cookie.get('name').split(" ");
     let modifiedString = nameArray[0] + nameArray[1][0];

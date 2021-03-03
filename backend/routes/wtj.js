@@ -224,7 +224,21 @@ router.post("/addcheckpoint",(req,res,next)=>{
 });
 
 var development = false;
-var fakeNumber = 550
+var fakeNumber = 550;
+router.get("/confirmadmin/:code",(req,res,next)=>{
+  if (req.params['code'] == undefined){
+    res.sendStatus(403);
+  };
+  var code = req.params['code'];
+  var correctCode = process.env.ADMINCODE;
+
+  if (code == correctCode){
+    res.json({correct:true});
+  } else {
+    res.json({correct:false});
+  };
+
+});
 router.get("/getwalkedtoday/:init/:auth",(req,res,next)=>{
   if (req.params['auth'] != process.env.WTJAUTH){
     res.sendStatus(403);

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DistanceService } from './distance.service';
@@ -31,6 +32,22 @@ export class AppComponent {
   title = 'walktojerusalem';
   maintenance = MAIN;
   ngOnInit(): void {
+    if (window.location.search == '?admin=true'){
+      alert("Admin Mode Requested!");
+      let pass = prompt("Enter Passkey")
+      console.log(pass)
+      this.http.get<{correct:Boolean}>(APIURL+"walk/confirmadmin/"+pass)
+      .subscribe((reposneData)=>{
+        console.log(reposneData)
+        if (reposneData.correct){
+          this.distanceService.setAdmin(true);
+        } else {
+          this.distanceService.setAdmin(false);
+        }
+      })
+    } else {
+      this.distanceService.setAdmin(false);
+    }
 
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.

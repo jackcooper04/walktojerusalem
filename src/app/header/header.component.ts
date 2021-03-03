@@ -15,10 +15,12 @@ const APIURL  = environment.apiUrl
 export class HeaderComponent implements OnInit {
   maintenance = MAIN;
   todayDist;
+  admin;
   selfDist;
   todayWalkSub:Subscription;
   apioffline = false;
   statusSub:Subscription;
+  adminCheck:Subscription;
   constructor(private matDialog:MatDialog,private http:HttpClient,public distanceService:DistanceService) { }
 
   openDialog(){
@@ -65,6 +67,9 @@ export class HeaderComponent implements OnInit {
      this.selfDist = responseData.selfWalk;
       // console.log(this.total);
       //console.log(this.percent);
+    });
+    this.adminCheck = this.distanceService.getAdminListener().subscribe(responseData =>{
+      this.admin = responseData.admin;
     });
     this.distanceService.getDistanceToday();
   }
